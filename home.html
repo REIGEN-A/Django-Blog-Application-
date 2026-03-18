@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 class="mb-4">Welcome {{ request.user.username }}</h2>
+
+<div class="row">
+    {% for post in posts %}
+    
+    <div class="col-md-6 fade-in">
+        <div class="card card-hover mb-4 border-0">
+
+            <div class="card-body">
+
+                <h4 class="fw-bold">{{ post.title }}</h4>
+
+                <p class="text-muted" style="white-space: pre-line;">
+                    {{ post.content }}
+                </p>
+
+                <small class="text-secondary">
+                    By {{ post.user.username }}
+                </small>
+
+                <br><br>
+
+                {% if post.user == request.user %}
+                    <a href="/edit/{{ post.id }}/" class="btn btn-primary btn-sm">Edit</a>
+                    <a href="/delete/{{ post.id }}/" class="btn btn-danger btn-sm">Delete</a>
+                {% endif %}
+
+            </div>
+
+        </div>
+    </div>
+
+    {% empty %}
+        <p>No posts available.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}
